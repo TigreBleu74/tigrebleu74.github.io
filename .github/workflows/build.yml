@@ -1,32 +1,20 @@
-name: Deploy Flutter Web to GitHub Pages
+name: Gh-Pages
 
 on:
   push:
-    branches:
-      - main  # Déclenche l'action sur chaque push sur main
+    branches: [ main ]
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-
-      - name: Enable Web
-        run: flutter config --enable-web
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build Flutter Web
-        run: flutter build web --release
-
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - run: flutter config --enable-web
+      - run: flutter pub get
+      - run: flutter build web --release
+      - uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: build/web
